@@ -68,7 +68,7 @@ public class CommentsActivity extends AppCompatActivity {
                         SQLiteDatabase database = openHelper.getWritableDatabase();
                         int id=IDS.get(position);
                         String[] ids = {id +""};
-                        database.delete(Contract.todo.TABLE_NAME,Contract.todo.ID + " = ?",ids);
+                        database.delete(Contract.Comments.TABLE_NAME,Contract.Comments.ID + " = ?",ids);
                         comments.remove(position);
                         IDS.remove(position);
                         adapter.notifyDataSetChanged();

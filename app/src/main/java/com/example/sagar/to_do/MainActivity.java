@@ -115,7 +115,14 @@ public class MainActivity extends AppCompatActivity {
                   int position = bundle.getInt(Constants.POSITION_KEY, -1);
                   if (position >= 0) {
                       todo item = getTodoFromBundle(bundle);
+                      SQLiteDatabase database = openHelper.getWritableDatabase();
+                      ContentValues contentValues = new ContentValues();
                       Log.d("TAG",item.getDesc());
+                      int id = bundle.getInt(Constants.ID_KEY, -1);
+                      String[] args={id+""};
+                      contentValues.put(Contract.todo.TITLE,item.getName());
+                      contentValues.put(Contract.todo.DESCRIPTION,item.getDesc());
+                      database.update(Contract.todo.TABLE_NAME,contentValues,Contract.todo.ID +"=?",args);
                       todoList.set(position,item);
                       adapter.notifyDataSetChanged();
                   }
@@ -143,7 +150,8 @@ public class MainActivity extends AppCompatActivity {
             if(bundle != null){
                 String title = bundle.getString(Constants.TITLE_KEY,"");
                 String desc = bundle.getString(Constants.DESCRIPTION_KEY,"");
-                return new todo(title,desc);
+                int id = bundle.getInt(Constants.ID_KEY,-1);
+                return new todo(title,desc,id);
 
             }
             return null;
